@@ -21,8 +21,12 @@ namespace Api.Helpers
             });
 
             // Services
-            services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+
+            // Repositories
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
 
             // Services Validators
             services.AddScoped<IValidator<ProductDto>, ProductValidator>();

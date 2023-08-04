@@ -9,6 +9,7 @@ namespace Api.Helpers
         public AutoMapperConfig()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Customer, CustomerDto>().ReverseMap();
         }
     }
 }

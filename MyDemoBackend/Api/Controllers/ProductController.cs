@@ -5,7 +5,7 @@ using Services.Interfaces;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Api.Controllers
         [Produces("application/json")]
         [HttpGet("product/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ListResponse<ProductDto>>> GetActiveProduct([FromRoute] int id)
+        public async Task<ActionResult<ObjectResponse<ProductDto>>> GetActiveProduct([FromRoute] int id)
         {
             ObjectResponse<ProductDto> response = await _service.GetActiveProduct(id);
             if (response.Success)
@@ -28,6 +28,5 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
-
     }
 }
