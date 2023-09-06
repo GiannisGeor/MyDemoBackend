@@ -6,14 +6,14 @@ namespace Data.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly DemoBackendDbContext _customerContext;
+        private readonly DemoBackendDbContext _context;
 
         private IQueryable<Customer> _customerQuery;
 
         public CustomerRepository(DemoBackendDbContext context)
         {
-            _customerContext = context;
-            _customerQuery = _customerContext.Customer;
+            _context = context;
+            _customerQuery = _context.Customer;
         }
 
         public async Task<Customer> GetActiveCustomerAsync(int id)

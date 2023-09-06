@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DemoBackendDbContext))]
-    partial class DemoBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230905135340_Add_Video_Club_Scheme")]
+    partial class AddVideoClubScheme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace Data.Migrations
                     b.Property<DateTime?>("Eos")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IDKasetas", "IDPelati", "Apo");
+                    b.HasKey("IDKasetas", "IDPelati");
 
                     b.HasIndex("IDPelati");
 
