@@ -23,10 +23,18 @@ namespace Api.Helpers
             // Services
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IPelatisService, PelatisService>();
+            services.AddTransient<IKasetaService, KasetaService>();
+            services.AddTransient<IEnoikiasiService, EnoikiasiService>();
+            services.AddTransient<ITn_snService, Tn_snService>();
 
             // Repositories
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IPelatisRepository, PelatisRepository>();
+            services.AddTransient<IKasetaRepository, KasetaRepository>();
+            services.AddTransient<IEnoikiasiRepository, EnoikiasiRepository>();
+            services.AddTransient<ITn_snRepository, Tn_snRepository>();
 
             // Services Validators
             services.AddScoped<IValidator<ProductDto>, ProductValidator>();
