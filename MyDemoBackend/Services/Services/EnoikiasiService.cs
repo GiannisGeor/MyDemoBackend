@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Data.Interfaces;
-using Data.Repositories;
 using Messages;
 using Models.Entities;
+using Models.Projections;
 using Serilog;
 using Services.Dtos;
 using Services.Interfaces;
@@ -19,7 +14,6 @@ namespace Services.Services
         IEnoikiasiRepository _enoikiasiRepository;
         IMapper _enoikiasiMapper;
 
-
         public EnoikiasiService(
             IEnoikiasiRepository enoikiasiRepository,
             IMapper enoikiasiMapper)
@@ -28,32 +22,41 @@ namespace Services.Services
             _enoikiasiMapper = enoikiasiMapper;
         }
 
-        public async Task<ListResponse<EnoikiasiDto>> GetEnoikiaseis()
+        /// <summary>
+        /// fernei mia lista apo IdKaseta IdPelati kai Tis imerominies opou enoikiastike h kaseta kai
+        /// null stis imerominies epistrofis
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ListResponse<EnoikiasiDto>> GetEnoikiaseisNull()
         {
             ListResponse<EnoikiasiDto> response = new ListResponse<EnoikiasiDto>();
             try
             {
-                List<Enoikiasi> enoikiaseis = await _enoikiasiRepository.GetEnoikiaseis();
-                var dtoAfterMapping = _enoikiasiMapper.Map<List<EnoikiasiDto>>(enoikiaseis);
-
+                List<Enoikiasi> enoikiaseisNull = await _enoikiasiRepository.GetEnoikiaseisNull();
+                var dtoAfterMapping = _enoikiasiMapper.Map<List<EnoikiasiDto>>(enoikiaseisNull);
                 response.SetSuccess(dtoAfterMapping);
                 return response;
             }
             catch (Exception e)
             {
-                Log.Error(e, $@"Error while executing GetEnoikiaseis with message : {e.Message} ");
-                response.SetHttpFailureCode($@"Error while executing GetEnoikiaseis with message : {e.Message}", HttpResultCode.InternalServerError);
+                Log.Error(e, $@"Error while executing GetEnoikiaseisNull with message : {e.Message} ");
+                response.SetHttpFailureCode($@"Error while executing GetEnoikiaseisNull with message : {e.Message}", HttpResultCode.InternalServerError);
                 return response;
             }
         }
 
-        public async Task<ObjectResponse<List<Tuple<int, int, int, int>>>> GetIdKasetonEnoikiasmenon()
+        /// <summary>
+        /// fernei mia lista apo Id Kaseton kai tis imerominies opou epistrafikan oi kasetes
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ListResponse<EpistrofiKasetasDto>> GetIdKasetonEnoikiasmenon()
         {
-            ObjectResponse<List<Tuple<int, int, int, int>>> response = new ObjectResponse<List<Tuple<int, int, int, int>>>();
+            ListResponse<EpistrofiKasetasDto> response = new();
             try
             {
-                List<Tuple<int, int, int, int>> IdKasetonEnoikiasmenon = await _enoikiasiRepository.GetIdKasetonEnoikiasmenon();
-                response.SetSuccess(IdKasetonEnoikiasmenon);
+                List<EpistrofiKasetasProjection> idKasetonEnoikiasmenon = await _enoikiasiRepository.GetIdKasetonEnoikiasmenon();
+                var dtoAfterMapping = _enoikiasiMapper.Map<List<EpistrofiKasetasDto>>(idKasetonEnoikiasmenon);
+                response.SetSuccess(dtoAfterMapping);
                 return response;
             }
             catch (Exception e)

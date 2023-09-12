@@ -41,6 +41,5 @@ namespace Api.Helpers
 
             return services;
         }
-
     }
 }

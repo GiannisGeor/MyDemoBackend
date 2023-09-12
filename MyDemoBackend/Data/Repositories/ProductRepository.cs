@@ -22,6 +22,5 @@ namespace Data.Repositories
                 .Where(x => x.IsActive && x.Id == id)
                 .SingleOrDefaultAsync();
         }
-
     }
-} 
+}

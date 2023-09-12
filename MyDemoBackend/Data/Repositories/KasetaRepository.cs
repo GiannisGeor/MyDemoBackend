@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
@@ -20,26 +15,14 @@ namespace Data.Repositories
             _context = context;
             _kasetaQuery = _context.Kaseta;
         }
-        public async Task<List<int>> GetKasetaId()
+        public async Task<List<int>> GetKasetaIdVhs()
         {
             return await _kasetaQuery
                 .AsNoTracking()
-                .Where(x => (x.Posotita >= 1 && x.Posotita <= 2) 
+                .Where(x => (x.Posotita >= 1 && x.Posotita <= 2)
                             || x.Timi > 2)
                 .Select(x => x.Id)
                 .ToListAsync();
-
-
-            //return await _kasetaQuery
-            //    .Include(x => x.Tainia)
-            //        .ThenInclude(x => x.TainiesSintelestes)
-            //            .ThenInclude(x => x.Sintelestis)
-            //    .Include(x => x.Enoikiasis)
-            //    .AsNoTracking()
-            //    .Where(x => (x.Posotita >= 1 && x.Posotita <= 2)
-            //                || x.Timi > 2)
-            //    .Select(x => x.Id)
-            //    .ToListAsync();
         }
 
         public async Task<List<int>> GetKasetaIdAscend()
@@ -47,9 +30,9 @@ namespace Data.Repositories
             return await _kasetaQuery.AsNoTracking()
                 .OrderBy(x => x.Posotita)
                 .Select(x => x.Id)
-                .ToListAsync(); 
+                .ToListAsync();
         }
-        
+
         public async Task<List<int>> GetKasetaIdDescend()
         {
             return await _kasetaQuery.AsNoTracking()
@@ -58,7 +41,7 @@ namespace Data.Repositories
                 .Select(x => x.Id)
                 .ToListAsync();
         }
-        
+
         public async Task<List<int>> GetIdDioKaseton()
         {
             return await _kasetaQuery.AsNoTracking()

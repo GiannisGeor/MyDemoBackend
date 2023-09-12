@@ -1,8 +1,6 @@
 ﻿using Messages;
 using Microsoft.AspNetCore.Mvc;
-using Services.Dtos;
 using Services.Interfaces;
-using Services.Services;
 
 namespace Api.Controllers
 {
@@ -17,23 +15,33 @@ namespace Api.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// 3.1.2 Q7 “Να βρεθούν οι κωδικοί από τις κασέτες που είναι τύπου VHS και, επιπλέον, η διαθέσιμη ποσότητα
+        /// τους είναι μεγαλύτερη του 2 ή η τιμή τους είναι μεγαλύτερη του 2”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
-        [HttpGet("IdKaseton")]
+        [HttpGet("IdKaseton-vhs")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ObjectResponse<List<int>>>> GetKasetaId()
+        public async Task<ActionResult<ObjectResponse<List<int>>>> GetKasetaIdVhs()
         {
-            ObjectResponse<List<int>> response = await _service.GetKasetaId();
+            ObjectResponse<List<int>> response = await _service.GetKasetaIdVhs();
             if (response.Success)
             {
                 return Ok(response);
             }
 
             return StatusCode((int)response.HttpResultCode, response);
-        } 
-        
+        }
+
+        /// <summary>
+        /// 3.1.2 Q10 “Να δοθούν οι κωδικοί των κασετών ταξινομημένοι ως προς τη διαθέσιμη ποσότητά τους, κατά
+        /// αύξοντα τρόπο”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
-        [HttpGet("IdKaseton-kata-afksousa-tropo")]
+        [HttpGet("IdKaseton-kata-afksonta-tropo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ObjectResponse<List<int>>>> GetKasetaIdAscend()
@@ -46,9 +54,15 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
-        
+
+        /// <summary>
+        /// 3.1.2 Q11 “Να δοθούν οι κωδικοί των κασετών ταξινομημένοι κατά φθίνοντα τρόπο ως προς την τιμή ενοικίασης. 
+        /// Στην περίπτωση ίσων τιμών ενοικίασης, η ταξινόμηση να γίνει κατά αύξουσα ταξινόμηση ως προς την
+        /// ποσότητα”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
-        [HttpGet("IdKaseton-kata-fthinousa-tropo")]
+        [HttpGet("IdKaseton-kata-fthinonta-tropo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ObjectResponse<List<int>>>> GetKasetaIdDescend()
@@ -62,6 +76,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q13 “Να δοθούν οι κωδικοί των 2 κασετών με τη μεγαλύτερη διαθέσιμη ποσότητα”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("IdKaseton-2-kaseton-megaliteris-posotitas")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Interfaces;
-using Messages;
+﻿using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using Models.Projections;
 
 namespace Data.Repositories
 {
@@ -22,13 +17,16 @@ namespace Data.Repositories
             _tn_snQuery = _context.Tn_sn;
         }
 
-        public async Task<List<Tuple<string, string>>> GetOnomataRolousSinteleston()
+        public async Task<List<OnomaKaiRolosSintelestiProjection>> GetOnomataRolousSinteleston()
         {
             return await _tn_snQuery
                 .Include(x => x.Sintelestis)
                 .Where(x => x.IDSintelesti == x.Sintelestis.Id)
-                .Select(x => new Tuple<string, string> 
-                (x.Sintelestis.Onoma , x.Rolos))
+                .Select(x => new OnomaKaiRolosSintelestiProjection
+                {
+                    OnomaSintelesti = x.Sintelestis.Onoma,
+                    RolosSintelesti = x.Rolos
+                })
                 .ToListAsync();
         }
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
-using Services.Services;
 
 namespace Api.Controllers
 {
@@ -17,6 +16,10 @@ namespace Api.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// 3.1.2 Q1 “Να δοθούν τα ονόματα όλων των πελατών ”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("onomata")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -32,6 +35,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q2 “Να δοθούν τα τηλέφωνα όλων των πελατών ”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("tilefona")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -47,13 +54,17 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q4 “Να δοθούν όλα τα στοιχεία των πελατών”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("pelates")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ListResponse<PelatisDto>>> GetPelates()
         {
-            ListResponse <PelatisDto> response = await _service.GetPelates();
+            ListResponse<PelatisDto> response = await _service.GetPelates();
             if (response.Success)
             {
                 return Ok(response);
@@ -62,6 +73,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q5 “Στο  πεδίο  Τηλέφωνο  να  εμφανίζεται και  το  πρόθεμα  2310”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("tilefona-me-kodikous-1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -77,6 +92,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q5 “Στο  πεδίο  Τηλέφωνο  να  εμφανίζεται και  το  πρόθεμα  2310”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("tilefona-me-kodikous-2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -92,6 +111,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.1.2 Q8 “Να βρεθούν ποια ονόματα πελατών αρχίζουν από Κ”.
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("onomata-apo-k")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -107,13 +130,17 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.2.1 Q4 “Να βρεθούν για κάθε πελάτη το όνομα του, ο κωδικός και η τιμή των κασετών που έχει ενοικιάσει” 
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("onomata-id-pelaton-kai-timi-kaseton-pou-exoun-enoikiasei")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ListResponse<Tuple<string, List<int>, List<int>>>>> GetOnomataIdPelatonKaiTimiKaseton()
+        public async Task<ActionResult<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>>> GetOnomataIdPelatonKaiTimiKaseton()
         {
-            ListResponse<Tuple<string, List<int>, List<int>>> response = await _service.GetOnomataIdPelatonKaiTimiKaseton();
+            var response = await _service.GetOnomataIdPelatonKaiTimiKaseton();
             if (response.Success)
             {
                 return Ok(response);

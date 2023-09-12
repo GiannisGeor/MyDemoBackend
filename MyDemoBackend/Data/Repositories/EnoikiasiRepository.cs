@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using Models.Projections;
 
 namespace Data.Repositories
 {
@@ -18,27 +14,28 @@ namespace Data.Repositories
         public EnoikiasiRepository(DemoBackendDbContext context)
         {
             _context = context;
-        _enoikiasiQuery = _context.Enoikiasi;
+            _enoikiasiQuery = _context.Enoikiasi;
         }
-        
 
-        public async Task<List<Enoikiasi>> GetEnoikiaseis()
+
+        public async Task<List<Enoikiasi>> GetEnoikiaseisNull()
         {
             return await _enoikiasiQuery.AsNoTracking()
                 .Where(x => x.Eos == null)
                 .ToListAsync();
         }
 
-        public async Task<List<Tuple<int, int, int, int>>> GetIdKasetonEnoikiasmenon()
+        public async Task<List<EpistrofiKasetasProjection>> GetIdKasetonEnoikiasmenon()
         {
+
             return await _enoikiasiQuery.AsNoTracking()
                 .Where(x => x.Eos != null)
                 .OrderBy(x => x.Eos)
-                .Select(x => new Tuple<int, int, int, int>(
-                    x.IDKasetas,
-                    x.Eos.Value.Day,
-                    x.Eos.Value.Month,
-                    x.Eos.Value.Year))
+                .Select(x => new EpistrofiKasetasProjection
+                {
+                    IdKasetas = x.IDKasetas,
+                    ImerominiaEpistrofis = (DateTime)x.Eos
+                })
                 .ToListAsync();
         }
     }

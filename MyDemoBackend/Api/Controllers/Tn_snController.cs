@@ -1,6 +1,6 @@
 ﻿using Messages;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.Projections;
 using Services.Interfaces;
 
 namespace Api.Controllers
@@ -16,13 +16,18 @@ namespace Api.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// 3.2.1 Q1 “Να δοθεί για κάθε συντελεστή το όνομα του και οι ρόλοι με τους οποίους αυτός έχει συμμετάσχει σε
+        /// ταινίες”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("onomata-roloi-sinteleston")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ListResponse<Tuple<string, string>>>> GetOnomataRolousSinteleston()
+        public async Task<ActionResult<ListResponse<OnomaKaiRolosSintelestiProjection>>> GetOnomataRolousSinteleston()
         {
-            ListResponse<Tuple<string, string>> response = await _service.GetOnomataRolousSinteleston();
+            var response = await _service.GetOnomataRolousSinteleston();
             if (response.Success)
             {
                 return Ok(response);
@@ -31,6 +36,10 @@ namespace Api.Controllers
             return StatusCode((int)response.HttpResultCode, response);
         }
 
+        /// <summary>
+        /// 3.2.1 Q2 “Να δοθούν οι κωδικοί των ταινιών στις οποίες έχει συμμετάσχει ο Alfred Hitchcock”
+        /// </summary>
+        /// <returns></returns>
         [Produces("application/json")]
         [HttpGet("IdTainion-alfred-hitchcock")]
         [ProducesResponseType(StatusCodes.Status200OK)]
