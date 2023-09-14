@@ -1,4 +1,5 @@
 ﻿using Messages;
+using Services.Dtos;
 
 namespace Services.Interfaces
 {
@@ -27,5 +28,25 @@ namespace Services.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ObjectResponse<List<int>>> GetIdDioKaseton();
+
+        ///// <summary>
+        ///// fernei mia lista apo onomata pelaton kai ta Ids kai oi times ton kaseton pou exei enoikiasei alla kai ta ID kai tis times
+        ///// pou den exoun enoikiastei
+        ///// </summary>
+        ///// <returns></returns>
+        //Task<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>> GetOnomataIdPelatonNullKaiTimiKaseton();
+
+        /// <summary>
+        /// gyrnaei apo thn basi to Id ths kasetas tipou VHS me megaliteri posotita apo thn kaseta tipou DVDs
+        /// </summary>
+        /// <returns></returns>
+        Task<ObjectResponse<List<int>>> GetIdVhsMegaliterisPosotitas();  
+        
+        /// <summary>
+        /// fernei thn megaliteri timi enoikiasis mias kasetas
+        /// </summary>
+        /// <returns></returns>
+        Task<ValueResponse<decimal>> GetMegistiTimiKasetas();
+
     }
 }

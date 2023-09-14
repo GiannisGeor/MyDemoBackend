@@ -46,5 +46,13 @@ namespace Services.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>> GetOnomataIdPelatonKaiTimiKaseton();
+
+        /// <summary>
+        /// fernei mia lista apo onomata pelaton kai ta Ids kai oi times ton kaseton pou exei enoikiasei alla kai ta onomata
+        /// apo autous pou den exoun enoikiasei
+        /// </summary>
+        /// <returns></returns>
+        Task<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>> GetOnomataIdPelatonKaiTimiKasetonNull();
+
     }
 }

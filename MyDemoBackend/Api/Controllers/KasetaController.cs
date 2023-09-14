@@ -1,5 +1,6 @@
 ﻿using Messages;
 using Microsoft.AspNetCore.Mvc;
+using Services.Dtos;
 using Services.Interfaces;
 
 namespace Api.Controllers
@@ -87,6 +88,65 @@ namespace Api.Controllers
         public async Task<ActionResult<ObjectResponse<List<int>>>> GetIdDioKaseton()
         {
             ObjectResponse<List<int>> response = await _service.GetIdDioKaseton();
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
+
+        ///// <summary>
+        ///// 3.2.1 Q6 “Να βρεθούν για κάθε πελάτη το όνομα του, ο κωδικός και η τιμή των κασετών που έχει ενοικιάσει. Να
+        ///// εμφανίζονται οι κωδικοί και οι τιμές των κασετών που δεν έχουν ενοικιαστεί από κάποιον πελάτη”
+        ///// </summary>
+        ///// <returns></returns>
+        //[Produces("application/json")]
+        //[HttpGet("onomata-id-pelaton-kai-timi-kaseton-pou-exoun-enoikiasei-kai-onoma-null")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<ActionResult<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>>> GetOnomataIdPelatonNullKaiTimiKaseton()
+        //{
+        //    var response = await _service.GetOnomataIdPelatonNullKaiTimiKaseton();
+        //    if (response.Success)
+        //    {
+        //        return Ok(response);
+        //    }
+
+        //    return StatusCode((int)response.HttpResultCode, response);
+        //}
+
+        /// <summary>
+        /// 3.2.2 “Να βρεθεί ο κωδικός κάθε ταινίας για την οποία η κασέτα τύπου VHS είναι σε μεγαλύτερη ποσότητα
+        /// από την αντίστοιχη κασέτα τύπου DVD”
+        /// </summary>
+        /// <returns></returns>
+        [Produces("application/json")]
+        [HttpGet("id-kasetas-vhs-se-megaliteri-posotita-apo-dvd")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ObjectResponse<List<int>>>> GetIdVhsMegaliterisPosotitas()
+        {
+            var response = await _service.GetIdVhsMegaliterisPosotitas();
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
+
+        /// <summary>
+        /// 3.3.1 “Να βρεθεί η μεγαλύτερη τιμή ενοικίασης μια κασέτας”
+        /// </summary>
+        /// <returns></returns>
+        [Produces("application/json")]
+        [HttpGet("megisti-timi-kaseton")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ValueResponse<decimal>>> GetMegistiTimiKasetas()
+        {
+            var response = await _service.GetMegistiTimiKasetas();
             if (response.Success)
             {
                 return Ok(response);

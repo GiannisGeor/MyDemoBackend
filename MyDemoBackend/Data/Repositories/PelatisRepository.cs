@@ -57,7 +57,25 @@ namespace Data.Repositories
                           TimiKasetas = e.Kaseta.Timi
                       }).ToList()
                   })
-                  //.DefaultIfEmpty()
+                  .ToListAsync();
+        }
+
+        public async Task<List<StoixeiaPelatiKaiEnoikiasisProjection>> GetOnomataIdPelatonKaiTimiKasetonNull()
+        {
+
+            return await _pelatisQuery.AsNoTracking()
+                  .Include(x => x.Enoikiasis)
+                    .ThenInclude(x => x.Kaseta)
+                  .Select(x => new StoixeiaPelatiKaiEnoikiasisProjection
+                  {
+                      OnomaPelati = x.Onoma,
+                      KasetesTimes = x.Enoikiasis.Select(e => new KasetesTimesProjection
+                      {
+                          IdKasetas = e.Kaseta.Id,
+                          TimiKasetas = e.Kaseta.Timi
+                      }).ToList()
+                  })
+                  .DefaultIfEmpty()
                   .ToListAsync();
         }
     }

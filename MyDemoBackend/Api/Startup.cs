@@ -1,6 +1,6 @@
-﻿using Api.Helpers;
+﻿using System.Reflection;
+using Api.Helpers;
 using AutoMapper;
-using Microsoft.OpenApi.Models;
 
 namespace Api
 {
@@ -28,7 +28,15 @@ namespace Api
             services.AddControllers();
 
             // Swagger
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(
+                c =>
+            {
+                // Support for comments
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            }
+            );
             //services.AddSwaggerGen(c =>
             //{
             //    // Support for auth

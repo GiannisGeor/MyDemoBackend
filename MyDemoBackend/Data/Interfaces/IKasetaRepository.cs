@@ -1,4 +1,7 @@
 ﻿
+using Messages;
+using Models.Projections;
+
 namespace Data.Interfaces
 {
     public interface IKasetaRepository
@@ -26,5 +29,25 @@ namespace Data.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<int>> GetIdDioKaseton();
+
+        ///// <summary>
+        ///// gyrnaei apo thn basi 
+        ///// </summary>
+        ///// <returns></returns>
+        //Task<List<StoixeiaPelatiKaiEnoikiasisProjection>> GetOnomataIdPelatonNullKaiTimiKaseton();
+
+
+        /// <summary>
+        /// gyrnaei apo thn basi to Id ths kasetas tipou VHS me megaliteri posotita apo thn kaseta tipou DVD
+        /// </summary>
+        /// <returns></returns>
+        Task<List<int>> GetIdVhsMegaliterisPosotitas();
+
+        /// <summary>
+        /// gyrnaei apo thn basi thn megaliteri timi enoikiasis mias kasetas
+        /// </summary>
+        /// <returns></returns>
+        Task<decimal> GetMegistiTimiKasetas();
+
     }
 }

@@ -148,6 +148,26 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
+
+        /// <summary>
+        /// 3.2.1 Q5 “Να βρεθούν για κάθε πελάτη το όνομα του, ο κωδικός και η τιμή των κασετών που έχει ενοικιάσει. Να
+        ///εμφανίζονται και οι πελάτες που δεν έχουν ενοικιάσει κάποια κασέτα”
+        /// </summary>
+        /// <returns></returns>
+        [Produces("application/json")]
+        [HttpGet("onomata-id-pelaton-kai-timi-kaseton-pou-exoun-enoikiasei-kai-id-timi-null")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>>> GetOnomataIdPelatonKaiTimiKasetonNull()
+        {
+            var response = await _service.GetOnomataIdPelatonKaiTimiKasetonNull();
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
     }
 }
 

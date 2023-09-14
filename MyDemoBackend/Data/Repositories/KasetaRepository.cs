@@ -1,6 +1,7 @@
 ﻿using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
+using Models.Projections;
 
 namespace Data.Repositories
 {
@@ -50,5 +51,51 @@ namespace Data.Repositories
                 .Take(2)
                 .ToListAsync();
         }
+
+        //public async Task<List<StoixeiaPelatiKaiEnoikiasisProjection>> GetOnomataIdPelatonNullKaiTimiKaseton()
+        //{
+        //    var test = await _kasetaQuery.AsNoTracking()
+        //          .Include(x => x.Enoikiasis.GroupBy(x => x.IDPelati))
+        //          .DefaultIfEmpty()
+        //          .ToListAsync(); ;
+
+        //    return null;
+
+        //    //return await _kasetaQuery.AsNoTracking()
+        //    //      .Include(x => x.Enoikiasis.GroupBy(x=> x.IDPelati))
+        //    //      .Select(x => new StoixeiaPelatiKaiEnoikiasisProjection
+        //    //      {
+        //    //          OnomaPelati = x.Enoikiasis.Select(x => x.Pelatis.Onoma)
+        //    //          KasetesTimes = 
+        //    //      })
+        //    //      .DefaultIfEmpty()
+        //    //      .ToListAsync();
+        //}
+
+
+        public async Task<List<int>> GetIdVhsMegaliterisPosotitas()
+        {
+
+           return await _kasetaQuery.AsNoTracking()
+                .Join(_context.Kaseta,
+                a => a.IDTainias,
+                b => b.IDTainias,
+                (a, b) => new { Α = a, Β = b })
+                .Where(pair => pair.Α.Tipos == "VHS" && pair.Β.Tipos == "DVD" && pair.Α.Posotita > pair.Β.Posotita)
+                .Select(pair => pair.Α.IDTainias)
+                .Distinct()
+                .ToListAsync();
+
+        }
+
+        public async Task<decimal> GetMegistiTimiKasetas()
+        {
+
+            return await _kasetaQuery.AsNoTracking().MaxAsync(x => x.Timi);
+
+        }
+
+
+
     }
 }

@@ -177,5 +177,28 @@ namespace Services.Services
                 return response;
             }
         }
+
+        /// <summary>
+        /// fernei mia lista apo onomata pelaton kai ta Ids kai oi times ton kaseton pou exei enoikiasei alla kai ta onomata
+        /// apo autous pou den exoun enoikiasei
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>> GetOnomataIdPelatonKaiTimiKasetonNull()
+        {
+            ListResponse<StoixeiaPelatiKaiEnoikiasisDto> response = new();
+            try
+            {
+                var OnomataIdPelatonKaiTimiKasetonNull = await _pelatisRepository.GetOnomataIdPelatonKaiTimiKasetonNull();
+                var dtoAfterMapping = _pelatisMapper.Map<List<StoixeiaPelatiKaiEnoikiasisDto>>(OnomataIdPelatonKaiTimiKasetonNull);
+                response.SetSuccess(dtoAfterMapping);
+                return response;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, $@"Error while executing GetOnomataIdPelatonKaiTimiKaseton with message : {e.Message} ");
+                response.SetHttpFailureCode($@"Error while executing GetOnomataIdPelatonKaiTimiKaseton with message : {e.Message}", HttpResultCode.InternalServerError);
+                return response;
+            }
+        }
     }
 }
