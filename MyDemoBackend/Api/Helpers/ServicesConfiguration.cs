@@ -27,6 +27,7 @@ namespace Api.Helpers
             services.AddTransient<IKasetaService, KasetaService>();
             services.AddTransient<IEnoikiasiService, EnoikiasiService>();
             services.AddTransient<ITn_snService, Tn_snService>();
+            services.AddTransient<ITainiaService, TainiaService>();
 
             // Repositories
             services.AddTransient<IProductRepository, ProductRepository>();
@@ -35,9 +36,18 @@ namespace Api.Helpers
             services.AddTransient<IKasetaRepository, KasetaRepository>();
             services.AddTransient<IEnoikiasiRepository, EnoikiasiRepository>();
             services.AddTransient<ITn_snRepository, Tn_snRepository>();
+            services.AddTransient<ITainiaRepository, TainiaRepository>();
 
             // Services Validators
             services.AddScoped<IValidator<ProductDto>, ProductValidator>();
+            services.AddScoped<IValidator<NeaTainiaDto>, NeaTainiaValidator>();
+            services.AddScoped<IValidator<MetaboliTainiasDto>, MetaboliTainiasValidator>();
+            services.AddScoped<IValidator<NeaTainiaKaiSintelestesDto>, NeaTainiaKaiSintelestesValidator>();
+            services.AddScoped<IValidator<SintelestesKaiRoloiDto>, SintelestesKaiRoloiValidator>();
+            services.AddScoped<IValidator<ProsthikiSintelestonDto>, ProsthikiSintelestonValidator>();
+            services.AddScoped<IValidator<NeosPelatisDto>, NeosPelatisValidator>();
+            services.AddScoped<IValidator<NeaKasetaDto>, NeaKasetaValidator>();
+            services.AddScoped<IValidator<OnomaTainiasDto>, OnomaTainiasValidator>();
 
             return services;
         }

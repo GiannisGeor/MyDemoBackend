@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Interfaces;
+using FluentValidation;
 using Messages;
 using Models.Entities;
 using Serilog;
@@ -12,13 +13,17 @@ namespace Services.Services
     {
         IPelatisRepository _pelatisRepository;
         IMapper _pelatisMapper;
+        private readonly IValidator<NeosPelatisDto> _neosPelatisValidator;
+
 
         public PelatisService(
             IPelatisRepository pelatisRepository,
-            IMapper pelatisMapper)
+            IMapper pelatisMapper,
+            IValidator<NeosPelatisDto> neosPelatisValidator)
         {
             _pelatisRepository = pelatisRepository;
             _pelatisMapper = pelatisMapper;
+            _neosPelatisValidator = neosPelatisValidator;
         }
 
         /// <summary>
@@ -197,6 +202,32 @@ namespace Services.Services
             {
                 Log.Error(e, $@"Error while executing GetOnomataIdPelatonKaiTimiKaseton with message : {e.Message} ");
                 response.SetHttpFailureCode($@"Error while executing GetOnomataIdPelatonKaiTimiKaseton with message : {e.Message}", HttpResultCode.InternalServerError);
+                return response;
+            }
+        }
+
+        public async Task<ObjectResponse<NeosPelatisResponseDto>> NeosPelatis(NeosPelatisDto neosPelatisDto)
+        {
+            ObjectResponse<NeosPelatisResponseDto> response = new();
+            try
+            {
+                var validationResult = _neosPelatisValidator.Validate(neosPelatisDto);
+                if (!validationResult.IsValid)
+                {
+                    response.SetFailureWithValidation(validationResult);
+                    return response;
+                }
+                Pelatis candidate = _pelatisMapper.Map<Pelatis>(neosPelatisDto);
+                candidate.MarkNew();
+                Pelatis entity = await _pelatisRepository.AddNewPelatis(candidate);
+                var dtoAfterMapping = _pelatisMapper.Map<NeosPelatisResponseDto>(entity);
+                response.SetSuccess(dtoAfterMapping);
+                return response;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, $@"Error while executing NeaTainia with message : {e.Message} ");
+                response.SetHttpFailureCode($@"Error while executing NeaTainia with message : {e.Message}", HttpResultCode.InternalServerError);
                 return response;
             }
         }

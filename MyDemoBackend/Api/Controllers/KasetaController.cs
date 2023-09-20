@@ -154,5 +154,25 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
+
+        /// <summary>
+        /// Endpoint για  Καταχώρηση νέας κασέτας
+        /// </summary>
+        /// <param name="neaKasetaDto"></param>
+        /// <returns></returns>
+        [Produces("application/json")]
+        [HttpPut("kaseta-nea-kataxorisi")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ObjectResponse<NeaKasetaResponseDto>>> NeaKaseta([FromBody] NeaKasetaDto neaKasetaDto)
+        {
+            ObjectResponse<NeaKasetaResponseDto> response = await _service.NeaKaseta(neaKasetaDto);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
     }
 }

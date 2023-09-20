@@ -41,5 +41,7 @@ namespace Data.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<StoixeiaPelatiKaiEnoikiasisProjection>> GetOnomataIdPelatonKaiTimiKasetonNull();
+
+        Task<Pelatis> AddNewPelatis(Pelatis candidate);
     }
 }

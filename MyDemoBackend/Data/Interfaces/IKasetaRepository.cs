@@ -1,6 +1,4 @@
-﻿
-using Messages;
-using Models.Projections;
+﻿using Models.Entities;
 
 namespace Data.Interfaces
 {
@@ -48,6 +46,8 @@ namespace Data.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<decimal> GetMegistiTimiKasetas();
+
+        Task<Kaseta> AddNewKaseta(Kaseta candidate);
 
     }
 }

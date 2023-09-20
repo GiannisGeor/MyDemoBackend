@@ -54,5 +54,6 @@ namespace Services.Interfaces
         /// <returns></returns>
         Task<ListResponse<StoixeiaPelatiKaiEnoikiasisDto>> GetOnomataIdPelatonKaiTimiKasetonNull();
 
+        Task<ObjectResponse<NeosPelatisResponseDto>> NeosPelatis(NeosPelatisDto neosPelatisDto);
     }
 }

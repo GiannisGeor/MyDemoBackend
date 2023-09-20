@@ -168,6 +168,26 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
+
+        /// <summary>
+        /// Endpoint για  Καταχώρηση νέου πελάτη
+        /// </summary>
+        /// <param name="neosPelatisDto"></param>
+        /// <returns></returns>
+        [Produces("application/json")]
+        [HttpPut("pelatis-nea-kataxorisi")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ObjectResponse<NeosPelatisResponseDto>>> NeosPelatis([FromBody] NeosPelatisDto neosPelatisDto)
+        {
+            ObjectResponse<NeosPelatisResponseDto> response = await _service.NeosPelatis(neosPelatisDto);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
     }
 }
 

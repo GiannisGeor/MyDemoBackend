@@ -1,7 +1,6 @@
 ﻿using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
-using Models.Projections;
 
 namespace Data.Repositories
 {
@@ -76,15 +75,15 @@ namespace Data.Repositories
         public async Task<List<int>> GetIdVhsMegaliterisPosotitas()
         {
 
-           return await _kasetaQuery.AsNoTracking()
-                .Join(_context.Kaseta,
-                a => a.IDTainias,
-                b => b.IDTainias,
-                (a, b) => new { Α = a, Β = b })
-                .Where(pair => pair.Α.Tipos == "VHS" && pair.Β.Tipos == "DVD" && pair.Α.Posotita > pair.Β.Posotita)
-                .Select(pair => pair.Α.IDTainias)
-                .Distinct()
-                .ToListAsync();
+            return await _kasetaQuery.AsNoTracking()
+                 .Join(_context.Kaseta,
+                 a => a.IDTainias,
+                 b => b.IDTainias,
+                 (a, b) => new { Α = a, Β = b })
+                 .Where(pair => pair.Α.Tipos == "VHS" && pair.Β.Tipos == "DVD" && pair.Α.Posotita > pair.Β.Posotita)
+                 .Select(pair => pair.Α.IDTainias)
+                 .Distinct()
+                 .ToListAsync();
 
         }
 
@@ -95,7 +94,11 @@ namespace Data.Repositories
 
         }
 
-
-
+        public async Task<Kaseta> AddNewKaseta(Kaseta candidate)
+        {
+            await _context.AddAsync(candidate);
+            await _context.SaveChangesAsync();
+            return candidate;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Data.Interfaces;
-using Data.Repositories;
+using FluentValidation;
 using Messages;
 using Models.Entities;
 using Serilog;
@@ -13,13 +13,17 @@ namespace Services.Services
     {
         IKasetaRepository _kasetaRepository;
         IMapper _kasetaMapper;
+        private readonly IValidator<NeaKasetaDto> _neaKasetaValidator;
+
 
         public KasetaService(
             IKasetaRepository kasetaRepository,
-            IMapper kasetaMapper)
+            IMapper kasetaMapper,
+            IValidator<NeaKasetaDto> neaKasetaValidator)
         {
             _kasetaRepository = kasetaRepository;
             _kasetaMapper = kasetaMapper;
+            _neaKasetaValidator = neaKasetaValidator;
         }
 
         /// <summary>
@@ -174,7 +178,41 @@ namespace Services.Services
                 response.SetHttpFailureCode($@"Error while executing GetMegistiTimiKasetas with message : {e.Message}", HttpResultCode.InternalServerError);
                 return response;
             }
+        }
 
+        public async Task<ObjectResponse<NeaKasetaResponseDto>> NeaKaseta(NeaKasetaDto neaKasetaDto)
+        {
+            ObjectResponse<NeaKasetaResponseDto> response = new();
+            try
+            {
+                var validationResult = _neaKasetaValidator.Validate(neaKasetaDto);
+                if (!validationResult.IsValid)
+                {
+                    response.SetFailureWithValidation(validationResult);
+                    return response;
+                }
+                Kaseta candidate = new Kaseta();
+                candidate.Tipos = neaKasetaDto.Tipos;
+                candidate.Posotita = neaKasetaDto.Posotita;
+                candidate.Timi = neaKasetaDto.Timi;
+                candidate.MarkNew();
+
+                Tainia candidateTainia = new Tainia();
+                candidateTainia.Titlos = neaKasetaDto.Tainia.Titlos;
+                candidateTainia.MarkNew();
+
+                candidate.Tainia = candidateTainia;
+                Kaseta entity = await _kasetaRepository.AddNewKaseta(candidate);
+                var dtoAfterMapping = _kasetaMapper.Map<NeaKasetaResponseDto>(entity);
+                response.SetSuccess(dtoAfterMapping);
+                return response;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, $@"Error while executing NeaKaseta with message : {e.Message} ");
+                response.SetHttpFailureCode($@"Error while executing NeaKaseta with message : {e.Message}", HttpResultCode.InternalServerError);
+                return response;
+            }
         }
     }
 }

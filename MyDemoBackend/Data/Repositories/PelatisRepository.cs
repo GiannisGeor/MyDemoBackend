@@ -62,7 +62,6 @@ namespace Data.Repositories
 
         public async Task<List<StoixeiaPelatiKaiEnoikiasisProjection>> GetOnomataIdPelatonKaiTimiKasetonNull()
         {
-
             return await _pelatisQuery.AsNoTracking()
                   .Include(x => x.Enoikiasis)
                     .ThenInclude(x => x.Kaseta)
@@ -77,6 +76,13 @@ namespace Data.Repositories
                   })
                   .DefaultIfEmpty()
                   .ToListAsync();
+        }
+
+        public async Task<Pelatis> AddNewPelatis(Pelatis candidate)
+        {
+            await _context.AddAsync(candidate);
+            await _context.SaveChangesAsync();
+            return candidate;
         }
     }
 }

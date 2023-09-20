@@ -40,13 +40,14 @@ namespace Services.Interfaces
         /// gyrnaei apo thn basi to Id ths kasetas tipou VHS me megaliteri posotita apo thn kaseta tipou DVDs
         /// </summary>
         /// <returns></returns>
-        Task<ObjectResponse<List<int>>> GetIdVhsMegaliterisPosotitas();  
-        
+        Task<ObjectResponse<List<int>>> GetIdVhsMegaliterisPosotitas();
+
         /// <summary>
         /// fernei thn megaliteri timi enoikiasis mias kasetas
         /// </summary>
         /// <returns></returns>
         Task<ValueResponse<decimal>> GetMegistiTimiKasetas();
 
+        Task<ObjectResponse<NeaKasetaResponseDto>> NeaKaseta(NeaKasetaDto neaKasetaDto);
     }
 }
