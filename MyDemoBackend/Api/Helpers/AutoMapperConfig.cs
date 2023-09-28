@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Models.Entities;
+using Models.Projections;
 using Services.Dtos;
 
 namespace Api.Helpers
@@ -8,8 +8,9 @@ namespace Api.Helpers
     {
         public AutoMapperConfig()
         {
-            CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<StoreStoreCategoryAddressProjection, StoreStoreCategoryAddressDto>().ReverseMap();
+            CreateMap<AddressProjection, AddressDto>().ReverseMap();
+            CreateMap<StoreCategoryProjection, StoreCategoryDto>().ReverseMap();
         }
     }
 }

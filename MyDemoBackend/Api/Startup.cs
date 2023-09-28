@@ -27,6 +27,19 @@ namespace Api
             // Net core default
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowAll",
+                                  builder =>
+                                  {
+                                      builder
+                                          .WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
+                                          .AllowCredentials()
+                                          .AllowAnyHeader()
+                                          .AllowAnyMethod();
+                                  });
+            });
+
             // Swagger
             services.AddSwaggerGen();
             //services.AddSwaggerGen(c =>

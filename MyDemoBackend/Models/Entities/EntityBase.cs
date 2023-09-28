@@ -11,5 +11,11 @@ namespace Models.Entities
 
         public bool IsActive { get; set; }
 
+        public void MarkNew()
+        {
+            Id = 0;
+            IsActive = true;
+        }
+
     }
 }

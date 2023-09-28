@@ -7,22 +7,22 @@ namespace Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class StoreController : Controller
     {
-        ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        IStoreService _storeService;
+
+        public StoreController(IStoreService storeService)
         {
-            _customerService = customerService;
+            _storeService = storeService;
         }
 
         [Produces("application/json")]
-        [HttpGet("customer/{id}")]
+        [HttpGet("store-store-category-and-address")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ObjectResponse<CustomerDto>>> GetActiveCustomer([FromRoute] int id)
+        public async Task<ActionResult<ListResponse<StoreStoreCategoryAddressDto>>> GetStoreStoreCategoryAddress()
         {
-            ObjectResponse<CustomerDto> response = await _customerService.GetActiveCustomer(id);
+            var response = await _storeService.GetStoreStoreCategoryAddress();
             if (response.Success)
             {
                 return Ok(response);
