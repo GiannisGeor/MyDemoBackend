@@ -47,10 +47,10 @@ namespace Models.Projections
         /// </summary>
         public string Phone { get; set; }
 
-        /// <summary>
-        /// Type of address
-        /// </summary>
-        public AddressType Type { get; set; }
+        ///// <summary>
+        ///// Type of address
+        ///// </summary>
+        //public AddressType Type { get; set; }
     }
 
     public class StoreCategoryProjection

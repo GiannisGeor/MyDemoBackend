@@ -15,10 +15,24 @@ namespace Models.Entities
         public int AddressId { get; set; }
 
         /// <summary>
+        /// The name of the Customer 
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The total price of the order
+        /// </summary>
+        public decimal TotalPrice { get; set; }
+
+        /// <summary>
+        /// The comments of each order
+        /// </summary>
+        public string OrderComments { get; set; }
+
+        /// <summary>
         /// Status of the order
         /// </summary>
         public OrderStatus orderStatus { get; set; }
-
 
         /// <summary>
         /// 1 to many connection to OrderLines table

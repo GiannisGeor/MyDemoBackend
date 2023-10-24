@@ -1,9 +1,13 @@
 ﻿using Data;
 using Data.Interfaces;
 using Data.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Services.Dtos;
 using Services.Interfaces;
 using Services.Services;
+using Services.Validators;
+
 
 namespace Api.Helpers
 {
@@ -19,11 +23,15 @@ namespace Api.Helpers
 
             // Services
             services.AddTransient<IStoreService, StoreService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             // Repositories
             services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             // Services Validators
+            services.AddScoped<IValidator<NewOrderDto>, NewOrderValidator>();
 
             return services;
         }

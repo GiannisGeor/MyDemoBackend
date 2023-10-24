@@ -23,7 +23,7 @@
         public decimal ProductPrice { get; set; }
 
         /// <summary>
-        /// The comments of each order
+        /// The comments of each product
         /// </summary>
         public string Comments { get; set; }
 
@@ -33,7 +33,7 @@
         public Order Order { get; set; }
 
         /// <summary>
-        /// Many to many connection from OrderLines to Product table
+        /// 1 to many connection from Product table to OrderLines 
         /// </summary>
         public Product Product { get; set; }
     }

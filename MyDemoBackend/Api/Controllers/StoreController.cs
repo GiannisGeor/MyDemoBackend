@@ -30,5 +30,20 @@ namespace Api.Controllers
 
             return StatusCode((int)response.HttpResultCode, response);
         }
+
+        [Produces("application/json")]
+        [HttpGet("store-store-category-and-address-product-category-products/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ObjectResponse<AllInitialDataDto>>> GetAllInitialData([FromRoute] int id)
+        {
+            var response = await _storeService.GetAllInitialData(id);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode((int)response.HttpResultCode, response);
+        }
     }
 }

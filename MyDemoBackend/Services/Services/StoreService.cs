@@ -37,5 +37,23 @@ namespace Services.Services
                 return response;
             }
         }
+        
+        public async Task<ObjectResponse<AllInitialDataDto>> GetAllInitialData(int id)
+        {
+            ObjectResponse<AllInitialDataDto> response = new();
+            try
+            {
+                var AllInitialData = await _storeRepository.GetAllInitialData(id);
+                var dtoAfterMapping = _storeMapper.Map<AllInitialDataDto>(AllInitialData);
+                response.SetSuccess(dtoAfterMapping);
+                return response;
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, $@"Error while executing GetStoreStoreCategoryAddress with message : {e.Message} ");
+                response.SetHttpFailureCode($@"Error while executing GetStoreStoreCategoryAddress with message : {e.Message}", HttpResultCode.InternalServerError);
+                return response;
+            }
+        }
     }
 }

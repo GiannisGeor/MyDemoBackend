@@ -1,4 +1,5 @@
 ﻿using Messages;
+using Models.Projections;
 using Services.Dtos;
 
 namespace Services.Interfaces
@@ -7,5 +8,6 @@ namespace Services.Interfaces
     {
 
         Task<ListResponse<StoreStoreCategoryAddressDto>> GetStoreStoreCategoryAddress();
+        Task<ObjectResponse<AllInitialDataDto>> GetAllInitialData(int id);
     }
 }

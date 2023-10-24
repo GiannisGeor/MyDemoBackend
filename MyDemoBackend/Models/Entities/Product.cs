@@ -20,7 +20,7 @@
         /// <summary>
         /// the prices of the products
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// The descriptions of the products
