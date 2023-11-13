@@ -4,18 +4,16 @@
 
 namespace Data.Migrations
 {
-    /// <inheritdoc />
-    public partial class ImportData : Migration
+    public partial class Add_Data : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql($@"
-                INSERT INTO Addresses(PostalCode, FullAddress, Phone, Type, isActive)
+                INSERT INTO Addresses(PostalCode, FullAddress, Type, isActive, DoorbellName, Floor)
                 VALUES
-                (67100, 'Panormou 20', '6978654354', 0, 1),
-                (67131, 'Skra 5', '6996554354', 0, 1),
-                (67100, 'Perikleous 9', '6970286354', 0, 1);
+                (67100, 'Panormou 20', 0, 1, 'Thraka', 0),
+                (67131, 'Skra 5', 0, 1, 'Giovanni', 0),
+                (67100, 'Perikleous 9', 0, 1, 'KOFI', 0);
 
                 INSERT INTO StoreCategories(Name, IsActive)
                 VALUES
@@ -44,9 +42,9 @@ namespace Data.Migrations
                 (3, 'Freddo Espresso', 1, 1.50, 'Freddo Espresso with no sugar', 1),
                 (3, 'Cappuccino', 1, 1.50, 'Cappuccino with no sugar', 1);
             ");
+
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
 

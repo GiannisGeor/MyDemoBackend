@@ -15,10 +15,7 @@ namespace Services.Dtos
         /// </summary>
         public int StoreId { get; set; }
 
-        /// <summary>
-        /// The name of the Customer 
-        /// </summary>
-        public string Name { get; set; }
+        public int AddressId { get; set; }
 
         /// <summary>
         /// The comments of each order
@@ -30,10 +27,6 @@ namespace Services.Dtos
         /// </summary>
         public List<NewOrderLinesDto> OrderLines { get; set; } = new List<NewOrderLinesDto>();
 
-        /// <summary>
-        /// 1 to 1 connection to Address table
-        /// </summary>
-        public AddressDto Address { get; set; }
     }
 
     public class NewOrderLinesDto

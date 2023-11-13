@@ -36,6 +36,5 @@
         /// 1 to 1 connection from ProductCategory to Product table
         /// </summary>
         public ProductCategory ProductCategory { get; set; }
-
     }
 }

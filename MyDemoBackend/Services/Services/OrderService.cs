@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Common.Methods;
 using Data.Interfaces;
 using FluentValidation;
 using Messages;
+using Microsoft.AspNetCore.Http;
 using Models.Entities;
 using Models.Enums;
 using Serilog;
@@ -14,18 +16,24 @@ namespace Services.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _orderMapper;
         private readonly IValidator<NewOrderDto> _newOrderValidator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(
             IOrderRepository orderRepository,
             IProductRepository productRepository,
+            IAddressRepository addressRepository,
             IMapper orderMapper,
+            IHttpContextAccessor httpContextAccessor,
             IValidator<NewOrderDto> newOrderValidator)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _addressRepository = addressRepository;
             _orderMapper = orderMapper;
+            _httpContextAccessor = httpContextAccessor;
             _newOrderValidator = newOrderValidator;
         }
 
@@ -34,6 +42,8 @@ namespace Services.Services
             ObjectResponse<NewOrderResponseDto> response = new();
             try
             {
+                int customerId = GlobalMethods.GetAppropriateCustomerId(_httpContextAccessor.HttpContext.User);
+
                 //response.SetHttpFailureCode($@"test", HttpResultCode.InternalServerError);
                 //return response;
                 var validationResult = _newOrderValidator.Validate(newOrderDto);
@@ -43,22 +53,32 @@ namespace Services.Services
                     return response;
                 }
 
-                List<Product> candidateProducts = await _productRepository.GetIdProducts(newOrderDto.OrderLines.Select(x => x.ProductId).Distinct().ToList());
+                int? addressCustomerId = await _addressRepository.GetCustomerIdByAddressId(newOrderDto.AddressId);
+                if (addressCustomerId != customerId)
+                {
+                    response.SetHttpFailureCode($@"The customerId does not match the existing customerId in the database", HttpResultCode.InternalServerError);
+                    return response;
+                }
+
+
+                List <Product> candidateProducts = await _productRepository.GetIdProducts(newOrderDto.OrderLines.Select(x => x.ProductId).Distinct().ToList());
 
                 Order candidate = new Order();
                 candidate.orderStatus = OrderStatus.OrderPlaced;
                 candidate.StoreId = newOrderDto.StoreId;
-                candidate.Name = newOrderDto.Name;
+                candidate.AddressId = newOrderDto.AddressId;
+                candidate.CustomerId = customerId;
                 candidate.OrderComments = newOrderDto.OrderComments;
                 candidate.MarkNew();
 
-                Address candidateAddress = new Address();
-                candidateAddress.FullAddress = newOrderDto.Address.FullAddress;
-                candidateAddress.PostalCode = newOrderDto.Address.PostalCode;
-                candidateAddress.Phone = newOrderDto.Address.Phone;
-                candidateAddress.Type = AddressType.Customer;
-                candidateAddress.MarkNew();
-                candidate.Address = candidateAddress;
+                //Address candidateAddress = new Address();
+                //candidateAddress.FullAddress = newOrderDto.Address.FullAddress;
+                //candidateAddress.PostalCode = newOrderDto.Address.PostalCode;
+                //candidateAddress.Floor = newOrderDto.Address.Floor;
+                //candidateAddress.DoorbellName = newOrderDto.Address.DoorbellName;
+                //candidateAddress.Type = AddressType.Customer;
+                //candidateAddress.MarkNew();
+                //candidate.Address = candidateAddress;
 
                 decimal totalPrice = 0;
 

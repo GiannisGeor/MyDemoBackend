@@ -31,7 +31,6 @@ namespace Data.Repositories
                     {
                         PostalCode = x.Address.PostalCode,
                         FullAddress = x.Address.FullAddress,
-                        Phone = x.Address.Phone,
                     },
                     StoreCategory = new StoreCategoryProjection
                     {
@@ -57,7 +56,6 @@ namespace Data.Repositories
                     {
                         PostalCode = x.Address.PostalCode,
                         FullAddress = x.Address.FullAddress,
-                        Phone = x.Address.Phone,
                     },
                     StoreCategory = new StoreCategoryProjection
                     {

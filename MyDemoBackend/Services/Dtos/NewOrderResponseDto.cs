@@ -17,11 +17,6 @@ namespace Services.Dtos
         public int StoreId { get; set; }
 
         /// <summary>
-        /// The name of the Customer 
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// The comments of each order
         /// </summary>
         public string OrderComments { get; set; }        
@@ -31,10 +26,6 @@ namespace Services.Dtos
         /// </summary>
         public List<NewOrderLinesResponseDto> OrderLines { get; set; } = new List<NewOrderLinesResponseDto>();
 
-        /// <summary>
-        /// 1 to 1 connection to Address table
-        /// </summary>
-        public AddressResponseDto Address { get; set; }
     }
 
     public class NewOrderLinesResponseDto
@@ -69,9 +60,16 @@ namespace Services.Dtos
         public string FullAddress { get; set; }
 
         /// <summary>
-        /// The Phone the store or customer
+        /// The floor that the customer lives on
         /// </summary>
-        public string Phone { get; set; }
+        public string Floor { get; set; }
+
+        /// <summary>
+        /// The name on the Doorbell that the customer lives on
+        /// </summary>
+        public string DoorbellName { get; set; }
+
+
     }
 }
 

@@ -19,6 +19,8 @@ namespace Api.Helpers
             CreateMap<Order, NewOrderResponseDto>();
             CreateMap<Address, AddressResponseDto>();
             CreateMap<OrderLines, NewOrderLinesResponseDto>();
+            CreateMap<Address, CustomerAddressDto>()
+                .ForMember(dest => dest.CanBeDeleted, opt => opt.Ignore());
         }
     }
 }

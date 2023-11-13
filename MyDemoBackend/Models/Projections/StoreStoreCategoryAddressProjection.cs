@@ -43,14 +43,15 @@ namespace Models.Projections
         public string FullAddress { get; set; }
 
         /// <summary>
-        /// The Phone the store or customer
+        /// The floor that the customer lives on
         /// </summary>
-        public string Phone { get; set; }
+        public string Floor { get; set; }
 
-        ///// <summary>
-        ///// Type of address
-        ///// </summary>
-        //public AddressType Type { get; set; }
+        /// <summary>
+        /// The name on the Doorbell that the customer lives on
+        /// </summary>
+        public string DoorbellName { get; set; }
+
     }
 
     public class StoreCategoryProjection

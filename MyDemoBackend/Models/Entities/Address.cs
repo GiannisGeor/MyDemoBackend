@@ -5,6 +5,10 @@ namespace Models.Entities
     public class Address : EntityBase
     {
         /// <summary>
+        /// The Id of Customer
+        /// </summary>
+        public int? CustomerId { get; set; }
+        /// <summary>
         /// The postalCode of the store or customer
         /// </summary>
         public int PostalCode { get; set; }
@@ -13,11 +17,16 @@ namespace Models.Entities
         /// The address and number of the store or customer
         /// </summary>
         public string FullAddress { get; set; }
+        
+        /// <summary>
+        /// The floor that the customer lives on
+        /// </summary>
+        public string Floor { get; set; }
 
         /// <summary>
-        /// The Phone the store or customer
+        /// The name on the Doorbell that the customer lives on
         /// </summary>
-        public string Phone { get; set; }
+        public string DoorbellName { get; set; }
 
         /// <summary>
         /// Type of address
@@ -33,6 +42,11 @@ namespace Models.Entities
         /// <summary>
         /// 1 to 1 connection from address to order
         /// </summary>
-        public Order Order { get; set; }
+        public List<Order> Order { get; set; }
+
+        /// <summary>
+        /// 1 to many connection from 
+        /// </summary>
+        public Customer Customer { get; set; }
     }
 }

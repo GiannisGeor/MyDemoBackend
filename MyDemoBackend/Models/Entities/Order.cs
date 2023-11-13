@@ -15,9 +15,9 @@ namespace Models.Entities
         public int AddressId { get; set; }
 
         /// <summary>
-        /// The name of the Customer 
+        /// The Id of Customer
         /// </summary>
-        public string Name { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// The total price of the order
@@ -48,5 +48,10 @@ namespace Models.Entities
         /// 1 to 1 connection to Address table
         /// </summary>
         public Address Address { get; set; }
+
+        /// <summary>
+        /// 1 to many connection from 
+        /// </summary>
+        public Customer Customer { get; set; }
     }
 }

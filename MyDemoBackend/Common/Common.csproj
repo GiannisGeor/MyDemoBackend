@@ -6,4 +6,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<None Update="EmailTranslations\de\confirmEmail.html">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  	<None Update="EmailTranslations\en\confirmEmail.html">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  	<None Update="EmailTranslations\de\forgotPassword.html">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  	<None Update="EmailTranslations\en\forgotPassword.html">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  </ItemGroup>
+
 </Project>
