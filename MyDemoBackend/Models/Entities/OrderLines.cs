@@ -36,5 +36,10 @@
         /// 1 to many connection from Product table to OrderLines 
         /// </summary>
         public Product Product { get; set; }
+
+        /// <summary>
+        /// 1 to many connection from OrderLines table to OrderLinesOptions
+        /// </summary>
+        public List<OrderLinesOptions> OrderLinesOptions { get; set; } = new List<OrderLinesOptions>();
     }
 }

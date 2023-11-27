@@ -32,7 +32,7 @@ namespace Api.Controllers
         }
 
         [Produces("application/json")]
-        [HttpGet("store-store-category-and-address-product-category-products/{id}")]
+        [HttpGet("initial-store-data/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ObjectResponse<AllInitialDataDto>>> GetAllInitialData([FromRoute] int id)

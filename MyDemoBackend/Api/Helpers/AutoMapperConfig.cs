@@ -19,8 +19,14 @@ namespace Api.Helpers
             CreateMap<Order, NewOrderResponseDto>();
             CreateMap<Address, AddressResponseDto>();
             CreateMap<OrderLines, NewOrderLinesResponseDto>();
+            CreateMap<OrderLinesOptions, NewOrderLinesOptionsResponseDto>();
             CreateMap<Address, CustomerAddressDto>()
                 .ForMember(dest => dest.CanBeDeleted, opt => opt.Ignore());
+            CreateMap<ProductOptionsGroupProjection, ProductOptionsGroupDto>();
+            CreateMap<OptionsGroupProjection, OptionsGroupDto>();
+            CreateMap<OptionsProjection, OptionsDto>();
+            CreateMap<BaseOptionsProjection, BaseOptionsDto>();
+            CreateMap<AllProductDataProjection, AllProductDataDto>();
         }
     }
 }

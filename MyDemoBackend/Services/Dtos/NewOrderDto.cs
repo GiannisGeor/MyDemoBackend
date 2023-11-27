@@ -45,5 +45,18 @@ namespace Services.Dtos
         /// The comments of each product
         /// </summary>
         public string Comments { get; set; }
+
+        /// <summary>
+        /// Options for each order line
+        /// </summary>
+        public List<NewOrderLinesOptionsDto> OrderLinesOptions { get; set; } = new List<NewOrderLinesOptionsDto>();
+    }
+
+    public class NewOrderLinesOptionsDto
+    {
+        /// <summary>
+        /// The Id of the Options table
+        /// </summary>
+        public int OptionsId { get; set; }
     }
 }

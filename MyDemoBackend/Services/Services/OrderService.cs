@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Immutable;
+using AutoMapper;
 using Common.Methods;
 using Data.Interfaces;
 using FluentValidation;
@@ -16,6 +17,7 @@ namespace Services.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IOptionRepository _optionRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly IMapper _orderMapper;
         private readonly IValidator<NewOrderDto> _newOrderValidator;
@@ -24,6 +26,7 @@ namespace Services.Services
         public OrderService(
             IOrderRepository orderRepository,
             IProductRepository productRepository,
+            IOptionRepository optionRepository,
             IAddressRepository addressRepository,
             IMapper orderMapper,
             IHttpContextAccessor httpContextAccessor,
@@ -31,6 +34,7 @@ namespace Services.Services
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _optionRepository = optionRepository;
             _addressRepository = addressRepository;
             _orderMapper = orderMapper;
             _httpContextAccessor = httpContextAccessor;
@@ -60,8 +64,9 @@ namespace Services.Services
                     return response;
                 }
 
-
                 List <Product> candidateProducts = await _productRepository.GetIdProducts(newOrderDto.OrderLines.Select(x => x.ProductId).Distinct().ToList());
+
+                List<Options> candidateOptions = await _optionRepository.GetIdOptions(newOrderDto.OrderLines.SelectMany(x => x.OrderLinesOptions.Select(o => o.OptionsId)).Distinct().ToList());
 
                 Order candidate = new Order();
                 candidate.orderStatus = OrderStatus.OrderPlaced;
@@ -71,27 +76,28 @@ namespace Services.Services
                 candidate.OrderComments = newOrderDto.OrderComments;
                 candidate.MarkNew();
 
-                //Address candidateAddress = new Address();
-                //candidateAddress.FullAddress = newOrderDto.Address.FullAddress;
-                //candidateAddress.PostalCode = newOrderDto.Address.PostalCode;
-                //candidateAddress.Floor = newOrderDto.Address.Floor;
-                //candidateAddress.DoorbellName = newOrderDto.Address.DoorbellName;
-                //candidateAddress.Type = AddressType.Customer;
-                //candidateAddress.MarkNew();
-                //candidate.Address = candidateAddress;
-
                 decimal totalPrice = 0;
 
-                foreach (var item in newOrderDto.OrderLines)
+                foreach (var orderLineDto in newOrderDto.OrderLines)
                 {
-                    OrderLines candidateOrderLines = new OrderLines();
-                    candidateOrderLines.ProductId = item.ProductId;
-                    candidateOrderLines.Quantity = item.Quantity;
-                    candidateOrderLines.ProductPrice = candidateProducts.FirstOrDefault(x => x.Id == item.ProductId).Price;
-                    totalPrice += item.Quantity * candidateProducts.FirstOrDefault(x => x.Id == item.ProductId).Price;
-                    candidateOrderLines.Comments = item.Comments;
-                    candidateOrderLines.MarkNew();
-                    candidate.OrderLines.Add(candidateOrderLines);
+                    OrderLines candidateOrderLine = new OrderLines();
+                    candidateOrderLine.ProductId = orderLineDto.ProductId;
+                    candidateOrderLine.Quantity = orderLineDto.Quantity;
+                    candidateOrderLine.ProductPrice = candidateProducts.FirstOrDefault(x => x.Id == orderLineDto.ProductId).Price;
+                    totalPrice += orderLineDto.Quantity * candidateOrderLine.ProductPrice;
+                    candidateOrderLine.Comments = orderLineDto.Comments;
+                    candidateOrderLine.MarkNew();
+
+                    foreach (var option in orderLineDto.OrderLinesOptions)
+                    {
+                        OrderLinesOptions candidateOrderLineOption = new OrderLinesOptions();
+                        candidateOrderLineOption.OptionsId = option.OptionsId;
+                        candidateOrderLineOption.OptionExtraCost = candidateOptions.FirstOrDefault(x => x.Id == option.OptionsId).ExtraCost;
+                        totalPrice += candidateOrderLineOption.OptionExtraCost;
+                        candidateOrderLineOption.MarkNew();
+                        candidateOrderLine.OrderLinesOptions.Add(candidateOrderLineOption);
+                    }
+                    candidate.OrderLines.Add(candidateOrderLine);
                 }
 
                 candidate.TotalPrice = totalPrice;

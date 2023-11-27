@@ -32,7 +32,7 @@ namespace Models.Projections
         /// <summary>
         /// 1 to 1 connection to Address table
         /// </summary>
-        public AddressProjection Address { get; set; }
+        //public AddressProjection Address { get; set; }
     }
 
     public class NewOrderLinesProjection
@@ -51,6 +51,17 @@ namespace Models.Projections
         /// The comments of each product
         /// </summary>
         public string Comments { get; set; }
+
+        public List<NewOrderLinesOptionsProjection> OrderLinesOptions { get; set; } = new List<NewOrderLinesOptionsProjection>();
     }
+
+    public class NewOrderLinesOptionsProjection
+    {
+        /// <summary>
+        /// The Id of the Options table
+        /// </summary>
+        public int OptionsId { get; set; }
+    }
+
 }
 

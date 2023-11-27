@@ -16,6 +16,8 @@ namespace Services.Dtos
         /// </summary>
         public int StoreId { get; set; }
 
+        public int AddressId { get; set; }
+
         /// <summary>
         /// The comments of each order
         /// </summary>
@@ -44,32 +46,17 @@ namespace Services.Dtos
         /// The comments of each product
         /// </summary>
         public string Comments { get; set; }
-      
+
+        public List<NewOrderLinesOptionsResponseDto> OrderLinesOptions { get; set; } = new List<NewOrderLinesOptionsResponseDto>();
+
     }
 
-    public class AddressResponseDto
+    public class NewOrderLinesOptionsResponseDto
     {
         /// <summary>
-        /// The postalCode of the store or customer
+        /// The Id of the Options table
         /// </summary>
-        public int PostalCode { get; set; }
-
-        /// <summary>
-        /// The address and number of the store or customer
-        /// </summary>
-        public string FullAddress { get; set; }
-
-        /// <summary>
-        /// The floor that the customer lives on
-        /// </summary>
-        public string Floor { get; set; }
-
-        /// <summary>
-        /// The name on the Doorbell that the customer lives on
-        /// </summary>
-        public string DoorbellName { get; set; }
-
-
+        public int OptionsId { get; set; }
     }
 }
 

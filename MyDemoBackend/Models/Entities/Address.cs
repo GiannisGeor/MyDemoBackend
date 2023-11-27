@@ -42,7 +42,7 @@ namespace Models.Entities
         /// <summary>
         /// 1 to 1 connection from address to order
         /// </summary>
-        public List<Order> Order { get; set; }
+        public List<Order> Order { get; set; } = new List<Order>();
 
         /// <summary>
         /// 1 to many connection from 

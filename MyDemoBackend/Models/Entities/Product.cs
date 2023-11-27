@@ -36,5 +36,10 @@
         /// 1 to 1 connection from ProductCategory to Product table
         /// </summary>
         public ProductCategory ProductCategory { get; set; }
+
+        /// <summary>
+        /// Many to many connection from Product to ProductOptionsGroup table
+        /// </summary>
+        public List<ProductOptionsGroup> ProductOptionsGroups { get; set; } = new List<ProductOptionsGroup> { };
     }
 }

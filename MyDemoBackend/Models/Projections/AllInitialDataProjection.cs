@@ -26,12 +26,12 @@ namespace Models.Projections
         public bool IsOpen { get; set; }
 
         /// <summary>
-        /// 1to1 connection to Address table
+        /// 1 to 1 connection to Address table
         /// </summary>
         public AddressProjection Address { get; set; } = new AddressProjection();
 
         /// <summary>
-        /// 1to1 connection to StoreCategory table
+        /// 1 to 1 connection to StoreCategory table
         /// </summary>
         public StoreCategoryProjection StoreCategory { get; set; } = new StoreCategoryProjection();
 
@@ -39,6 +39,11 @@ namespace Models.Projections
         /// 1 to many connection to ProductCategory table
         /// </summary>
         public List<ProductCategoryProjection> ProductCategories { get; set; } = new List<ProductCategoryProjection>();
+
+        /// <summary>
+        /// 1 to many connection from OptionsGroup to Product table
+        /// </summary>
+        public List<OptionsGroupProjection> OptionsGroup { get; set; } = new List<OptionsGroupProjection>();
     }
 
     public class ProductCategoryProjection
@@ -84,8 +89,7 @@ namespace Models.Projections
         /// <summary>
         /// The descriptions of the products
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; }        
     }
-
 }
 

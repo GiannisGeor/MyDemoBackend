@@ -47,6 +47,9 @@ namespace Data.Repositories
                 .Include(x => x.StoreCategory)
                 .Include(x => x.ProductCategories)
                     .ThenInclude(x => x.Products)
+                .Include(x => x.OptionsGroup)
+                    .ThenInclude(x => x.Options)
+                    .ThenInclude(x => x.BaseOptions)
                 .Select(x => new AllInitialDataProjection
                 {
                     Id = x.Id,
@@ -71,7 +74,7 @@ namespace Data.Repositories
                             Name = p.Name,
                             IsAvailable = p.IsAvailable,
                             Price = p.Price,
-                            Description = p.Description
+                            Description = p.Description,
                         }).ToList()
                     }).ToList(),
                 })

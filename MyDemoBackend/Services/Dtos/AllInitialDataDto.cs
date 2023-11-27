@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models;
+using Models.Entities;
 
 namespace Services.Dtos
 {
@@ -37,6 +39,11 @@ namespace Services.Dtos
         /// 1 to many connection to ProductCategory table
         /// </summary>
         public List<ProductCategoryDto> ProductCategories { get; set; } = new List<ProductCategoryDto>();
+
+        /// <summary>
+        /// 1 to many connection from OptionsGroup to Product table
+        /// </summary>
+        public List<OptionsGroupDto> OptionsGroup { get; set; } = new List<OptionsGroupDto>();
     }
 
     public class ProductCategoryDto
@@ -84,5 +91,4 @@ namespace Services.Dtos
         /// </summary>
         public string Description { get; set; }
     }
-
 }

@@ -41,6 +41,7 @@ namespace Api.Helpers
             services.AddTransient<IStoreService, StoreService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IProductService, ProductService>();
 
             // Repositories
             services.AddTransient<IGenericRepository, GenericRepository>();
@@ -50,6 +51,7 @@ namespace Api.Helpers
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IOptionRepository, OptionRepository>();
 
             // Services Validators
             services.AddScoped<IValidator<NewOrderDto>, NewOrderValidator>();

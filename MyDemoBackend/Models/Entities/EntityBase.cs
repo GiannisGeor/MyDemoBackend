@@ -21,14 +21,14 @@ namespace Models.Entities
         /// <summary>
         /// User who created the entity. Defaults to 'Application'.
         /// </summary>
-        public string CreatedBy { get; set; } = GlobalConstants.Database.DefaultMarkUser;
+        public string? CreatedBy { get; set; } = GlobalConstants.Database.DefaultMarkUser;
 
         /// <summary>
         /// Entity's creation date. Defaults to DateTime.Now.
         /// </summary>
         public DateTime? Created { get; set; } = DateTime.Now;
 
-        public string ModifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
 
         public DateTime? Modified { get; set; }
 

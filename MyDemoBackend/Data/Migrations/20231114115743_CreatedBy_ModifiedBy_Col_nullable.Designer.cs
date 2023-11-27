@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DemoBackendDbContext))]
-    partial class DemoBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231114115743_CreatedBy_ModifiedBy_Col_nullable")]
+    partial class CreatedBy_ModifiedBy_Col_nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,6 +173,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CustomerId")
@@ -201,6 +204,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PostalCode")
@@ -293,6 +297,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -311,18 +316,14 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("BaseOptions", (string)null);
                 });
@@ -339,6 +340,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -358,6 +360,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -422,6 +425,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -440,12 +444,10 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OptionsGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductOptionsGroupId")
+                    b.Property<int>("OptionsGroupId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -453,8 +455,6 @@ namespace Data.Migrations
                     b.HasIndex("BaseOptionsId");
 
                     b.HasIndex("OptionsGroupId");
-
-                    b.HasIndex("ProductOptionsGroupId");
 
                     b.ToTable("Options", (string)null);
                 });
@@ -471,6 +471,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -489,18 +490,19 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StoreId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OptionsGroup", (string)null);
                 });
@@ -520,6 +522,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustomerId")
@@ -538,6 +541,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderComments")
@@ -580,6 +584,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -595,6 +600,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
@@ -630,6 +636,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -645,6 +652,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OptionExtraCost")
@@ -677,6 +685,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -699,6 +708,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -730,6 +740,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -745,6 +756,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -759,50 +771,6 @@ namespace Data.Migrations
                     b.HasIndex("StoreId");
 
                     b.ToTable("ProductCategories", (string)null);
-                });
-
-            modelBuilder.Entity("Models.Entities.ProductOptionsGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OptionsGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionsGroupId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductOptionsGroups", (string)null);
                 });
 
             modelBuilder.Entity("Models.Entities.Store", b =>
@@ -820,6 +788,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -838,6 +807,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -870,6 +840,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Deleted")
@@ -885,6 +856,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -977,17 +949,6 @@ namespace Data.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Models.Entities.BaseOptions", b =>
-                {
-                    b.HasOne("Models.Entities.Store", "Store")
-                        .WithMany("BaseOptions")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Store");
-                });
-
             modelBuilder.Entity("Models.Entities.Options", b =>
                 {
                     b.HasOne("Models.Entities.BaseOptions", "BaseOptions")
@@ -996,30 +957,26 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Models.Entities.OptionsGroup", null)
+                    b.HasOne("Models.Entities.OptionsGroup", "OptionsGroup")
                         .WithMany("Options")
-                        .HasForeignKey("OptionsGroupId");
-
-                    b.HasOne("Models.Entities.ProductOptionsGroup", "ProductOptionsGroup")
-                        .WithMany("Options")
-                        .HasForeignKey("ProductOptionsGroupId")
+                        .HasForeignKey("OptionsGroupId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("BaseOptions");
 
-                    b.Navigation("ProductOptionsGroup");
+                    b.Navigation("OptionsGroup");
                 });
 
             modelBuilder.Entity("Models.Entities.OptionsGroup", b =>
                 {
-                    b.HasOne("Models.Entities.Store", "Store")
+                    b.HasOne("Models.Entities.Product", "Product")
                         .WithMany("OptionsGroup")
-                        .HasForeignKey("StoreId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("Store");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Models.Entities.Order", b =>
@@ -1109,25 +1066,6 @@ namespace Data.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("Models.Entities.ProductOptionsGroup", b =>
-                {
-                    b.HasOne("Models.Entities.OptionsGroup", "OptionsGroup")
-                        .WithMany("productOptionsGroups")
-                        .HasForeignKey("OptionsGroupId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Entities.Product", "Product")
-                        .WithMany("ProductOptionsGroups")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("OptionsGroup");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Models.Entities.Store", b =>
                 {
                     b.HasOne("Models.Entities.Address", "Address")
@@ -1175,8 +1113,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Models.Entities.OptionsGroup", b =>
                 {
                     b.Navigation("Options");
-
-                    b.Navigation("productOptionsGroups");
                 });
 
             modelBuilder.Entity("Models.Entities.Order", b =>
@@ -1191,9 +1127,9 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Models.Entities.Product", b =>
                 {
-                    b.Navigation("OrderLines");
+                    b.Navigation("OptionsGroup");
 
-                    b.Navigation("ProductOptionsGroups");
+                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("Models.Entities.ProductCategory", b =>
@@ -1201,17 +1137,8 @@ namespace Data.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Models.Entities.ProductOptionsGroup", b =>
-                {
-                    b.Navigation("Options");
-                });
-
             modelBuilder.Entity("Models.Entities.Store", b =>
                 {
-                    b.Navigation("BaseOptions");
-
-                    b.Navigation("OptionsGroup");
-
                     b.Navigation("Orders");
 
                     b.Navigation("ProductCategories");

@@ -57,6 +57,5 @@ namespace Models.Projections
     public class StoreCategoryProjection
     {
         public string Name { get; set; }
-
     }
 }

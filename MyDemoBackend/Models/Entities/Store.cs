@@ -25,12 +25,12 @@
         /// <summary>
         /// 1 to 1 connection to Address table
         /// </summary>
-        public Address Address { get; set; } = new Address();
+        public Address Address { get; set; }
 
         /// <summary>
         /// 1 to 1 connection to StoreCategory table
         /// </summary>
-        public StoreCategory StoreCategory { get; set; } = new StoreCategory();
+        public StoreCategory StoreCategory { get; set; }
 
         /// <summary>
         /// 1 to many connection to Order table
@@ -41,5 +41,15 @@
         /// 1 to many connection to ProductCategory table
         /// </summary>
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
+
+        /// <summary>
+        /// 1 to many connection from OptionsGroup to Store table
+        /// </summary>
+        public List<BaseOptions> BaseOptions { get; set; } = new List<BaseOptions>();
+
+        /// <summary>
+        /// 1 to many connection from OptionsGroup to Product table
+        /// </summary>
+        public List<OptionsGroup> OptionsGroup { get; set; } = new List<OptionsGroup>();
     }
 }

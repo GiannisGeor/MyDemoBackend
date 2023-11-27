@@ -21,6 +21,11 @@ namespace Data
         public DbSet<OrderLines> OrderLines { get; set; }
         public DbSet<Translations> Translations { get; set; }
         public DbSet<EmailTemplate> EmailTemplate { get; set; }
+        public DbSet<Options> Options { get; set; }
+        public DbSet<OptionsGroup> OptionsGroup { get; set; }
+        public DbSet<OrderLinesOptions> OrderLinesOptions { get; set; }
+        public DbSet<BaseOptions> BaseOptions { get; set; }
+        public DbSet<ProductOptionsGroup> ProductOptionsGroup { get; set; }
 
         public DemoBackendDbContext(DbContextOptions options) : base(options)
         {
@@ -48,7 +53,7 @@ namespace Data
                 .IsUnique();
 
 
-            // Talbes to correct Schema
+            // Tables to correct Schema
             modelBuilder.Entity<Translations>().ToTable("Translations", "Application");
             modelBuilder.Entity<EmailTemplate>().ToTable("EmailTemplate", "Application");
 
@@ -83,6 +88,15 @@ namespace Data
                       .HasForeignKey(x => x.StoreId)
                       .OnDelete(DeleteBehavior.ClientCascade);
 
+                entity.HasMany<OptionsGroup>(x => x.OptionsGroup)
+                      .WithOne(x => x.Store)
+                      .HasForeignKey(x => x.StoreId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
+
+                entity.HasMany<BaseOptions>(x => x.BaseOptions)
+                      .WithOne(x => x.Store)
+                      .HasForeignKey(x => x.StoreId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -105,27 +119,60 @@ namespace Data
                 .HasForeignKey(x => x.ProductCategoryId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasMany<OrderLines>(x => x.OrderLines)
+                      .WithOne(x => x.Product)
+                      .HasForeignKey(x => x.ProductId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
 
-            modelBuilder.Entity<Product>()
-                .HasMany<OrderLines>(x => x.OrderLines)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
+                entity.HasMany(x => x.ProductOptionsGroups)
+                      .WithOne(x => x.Product)
+                      .HasForeignKey(x => x.ProductId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
+            });
+
+            modelBuilder.Entity<OptionsGroup>()
+                .HasMany(x => x.productOptionsGroups)
+                .WithOne(x => x.OptionsGroup)
+                .HasForeignKey(x => x.OptionsGroupId)
                 .OnDelete(DeleteBehavior.ClientCascade);
-
 
             modelBuilder.Entity<Order>()
                 .HasMany<OrderLines>(x => x.OrderLines)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
                 .OnDelete(DeleteBehavior.ClientCascade);
-
-
+            
             modelBuilder.Entity<Address>()
                 .HasMany<Order>(x => x.Order)
                 .WithOne(x => x.Address)
                 .HasForeignKey(x => x.AddressId)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
+            modelBuilder.Entity<OrderLines>()
+                .HasMany<OrderLinesOptions>(x => x.OrderLinesOptions)
+                .WithOne(x => x.OrderLines)
+                .HasForeignKey(x => x.OrderLineId)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            modelBuilder.Entity<Options>(entity =>
+            {
+                entity.HasOne(x => x.ProductOptionsGroup)
+                      .WithMany(x => x.Options)
+                      .HasForeignKey(x => x.ProductOptionsGroupId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
+
+                entity.HasOne(x => x.BaseOptions)
+                      .WithMany(x => x.Options) 
+                      .HasForeignKey(x => x.BaseOptionsId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
+
+                entity.HasMany(x => x.OrderLinesOptions)
+                      .WithOne(x => x.Options)
+                      .HasForeignKey(x => x.OptionsId)
+                      .OnDelete(DeleteBehavior.ClientCascade);
+            });
 
             modelBuilder.Entity<Store>().ToTable("Stores");
             modelBuilder.Entity<StoreCategory>().ToTable("StoreCategories");
@@ -135,6 +182,11 @@ namespace Data
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<OrderLines>().ToTable("OrderLines");           
             modelBuilder.Entity<Customer>().ToTable("Customers");           
+            modelBuilder.Entity<Options>().ToTable("Options");           
+            modelBuilder.Entity<OptionsGroup>().ToTable("OptionsGroup");           
+            modelBuilder.Entity<OrderLinesOptions>().ToTable("OrderLinesOptions");           
+            modelBuilder.Entity<BaseOptions>().ToTable("BaseOptions");           
+            modelBuilder.Entity<ProductOptionsGroup>().ToTable("ProductOptionsGroups");           
         }
     }
 }
